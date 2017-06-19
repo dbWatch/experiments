@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<asproperties>
+		<name>http_test</name>
+		<version>1</version>
+		<company>dbwatch.no</company>
+		<group>no.dbwatch</group>
+		<artifactid>http_test</artifactid>
+	</asproperties>
+	<property>
+		<key>
+			<entityType>http_test</entityType>
+			<name>http_test</name>
+		</key>
+		<compatability>instance[databasetype='oracle']</compatability>
+		<valid-for>1m</valid-for>
+		<value engine="dbwql"><![CDATA[instance[status='LOST CONNECTION']->i/$i/name{0}/$i/group{1}/$i/status{2}/$i/statustime{3}]]></value>
+		<value engine="javascript" foreach="row" outscope='imput'>
+			<![CDATA[
+			try {
+				setcursor(http.get("https://update.dbwatch.com/licenses/blah"),'web1');
+				
+				result.setProperty("http_test", val);   
+
+			}
+			catch (err) {
+				result.setProperty("http_test",err.message);
+			}
+			]]>
+		
+		</value>
+		<value engine='CSV' input='web1'>
+			val=
+		</value>
+		<value engine='javascript'>
+			
+		</value>
+	</property>
+</properties>
