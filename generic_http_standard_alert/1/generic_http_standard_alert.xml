@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<asproperties>
+		<name>Generic_http_alert</name>
+		<version>1</version>
+		<company>dbwatch.no</company>
+		<group>no.dbwatch</group>
+		<artifactid>Generic_http_alert</artifactid>
+	</asproperties>
+	<property>
+		<key name="status" entityType="status"/>
+		<key>details</key>		
+		<display-name>Generic HTTP alert</display-name>
+		<description>Test a HTTP URL for </description>
+		<category>Maintenance</category>
+		<parameters>
+			<parameter name="URL" default="http://www.dbwatch.com/" type="string" description="URL to test"/>
+			<parameter name="findstring" default="Managing databases means more than just monitoring" type="string" description="String to look for in webpage body"/>
+		</parameters> 		
+		<installable>
+			<key>Generic_http_alert</key>
+			<compatability><![CDATA[.]]></compatability>
+		</installable>
+		<default-schedule>4h</default-schedule>
+		<valid-for>1h</valid-for>
+		<compatability>.[source like "Generic_http_alert"]/instance</compatability>
+		<entityType>scheduledtask</entityType>
+		
+		<value engine="javascript">
+			<![CDATA[
+			try {
+			    var urldata = http.get(URL);
+
+			    if (urldata.result() == 200 && urldata.getBodyAsString().contains(findstring)) {
+				result.setStatus(0, "OK");
+			    } else if (urldata.result() == 200) {
+				result.setStatus(2, "String not found");
+			    } else {
+				result.setStatus(2, "HTTP Error: "+urldata.result().toString+" "+urldata.status_description());
+			    }
+			} catch (err) {
+			    result.setStatus(2, err.message);
+			}
+			]]>
+		</value>
+	</property>
+	<property>
+		<key>body</key>
+		<parameters>
+			<parameter name="URL" default="http://www.dbwatch.com/" type="string" description="URL to test"/>
+			<parameter name="findstring" default="Managing databases means more than just monitoring" type="string" description="String to look for in webpage body"/>
+		</parameters>
+		<default-schedule>4h</default-schedule>
+		<valid-for>1h</valid-for>
+		<compatability>.[source like "Generic_http_alert"]/instance</compatability>
+		<value engine="javascript">
+			<![CDATA[
+			try {
+			    var urldata = http.get(URL);
+			    if (urldata.result() == 200) {
+				    result.setProperty("body", urldata.getBodyAsString());
+			    }
+			} catch (err) {
+			}
+			]]>
+		</value>
+	</property>
+</properties>
