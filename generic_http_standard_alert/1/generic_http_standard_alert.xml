@@ -10,7 +10,7 @@
 	<property>
 		<key name="status" entityType="status"/>
 		<key>details</key>		
-		<display-name>Generic HTTP alert test test</display-name>
+		<display-name>Generic HTTP alert</display-name>
 		<description>Test a HTTP URL for </description>
 		<category>Maintenance</category>
 		<parameters>
