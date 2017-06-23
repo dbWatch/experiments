@@ -10,8 +10,8 @@
 	<property>
 		<key name="status" entityType="status"/>
 		<key>details</key>		
-		<display-name>Generic HTTP alert _______</display-name>
-		<description>Test a HTTP URL for _______</description>
+		<display-name>Generic HTTP alert aaaaaaaaa</display-name>
+		<description>Test a HTTP URL for aaaaaaaaa</description>
 		<category>Maintenance</category>
 		<parameters>
 			<parameter name="URL" default="http://www.dbwatch.com/" type="string" description="URL to test"/>
